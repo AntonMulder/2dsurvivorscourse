@@ -6,20 +6,20 @@ extends Node
 
 
 func _ready() -> void:
-	(health_component as HealthComponent).died.connect(on_died)
+    (health_component as HealthComponent).died.connect(on_died)
 
 
 func on_died():
-	if randf() > drop_percent:
-		return
+    if randf() > drop_percent:
+        return
 
-	if vial_scene == null:
-		return
+    if vial_scene == null:
+        return
 
-	if not owner is Node2D:
-		return
+    if not owner is Node2D:
+        return
 
-	var spawn_position = (owner as Node2D).global_position
-	var vial_instance: Node2D = vial_scene.instantiate()
-	owner.get_parent().add_child(vial_instance)
-	vial_instance.global_position = spawn_position
+    var spawn_position = (owner as Node2D).global_position
+    var vial_instance: Node2D = vial_scene.instantiate()
+    owner.get_parent().add_child(vial_instance)
+    vial_instance.global_position = spawn_position

@@ -5,10 +5,10 @@ extends CanvasLayer
 
 
 func _ready() -> void:
-	experience_manager.experience_updated.connect(on_experience_updated)
+    experience_manager.experience_updated.connect(on_experience_updated)
 
 
 func on_experience_updated(current_experience: float, target_experience: float):
-	var percent = current_experience / target_experience
+    var percent = current_experience / target_experience
 
-	progress_bar.value = percent
+    progress_bar.value = percent

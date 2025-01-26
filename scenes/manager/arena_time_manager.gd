@@ -4,4 +4,4 @@ extends Node
 
 
 func get_time_elapsed() -> float:
-	return timer.wait_time - timer.time_left
+    return timer.wait_time - timer.time_left

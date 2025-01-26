@@ -11,20 +11,20 @@ var target_experience: float = 5
 
 
 func _ready():
-	GameEvents.experience_vial_collected.connect(on_experience_vial_collected)
+    GameEvents.experience_vial_collected.connect(on_experience_vial_collected)
 
 
 func increment_experience(number: float):
-	current_experience = min(current_experience + number, target_experience)
+    current_experience = min(current_experience + number, target_experience)
 
-	if current_experience == target_experience:
-		current_level += 1
-		target_experience += TARGET_EXPERIENCE_GROWTH
-		current_experience = 0
-		level_up.emit(current_level)
+    if current_experience == target_experience:
+        current_level += 1
+        target_experience += TARGET_EXPERIENCE_GROWTH
+        current_experience = 0
+        level_up.emit(current_level)
 
-	experience_updated.emit(current_experience, target_experience)
+    experience_updated.emit(current_experience, target_experience)
 
 
 func on_experience_vial_collected(number: float):
-	increment_experience(number)
+    increment_experience(number)
