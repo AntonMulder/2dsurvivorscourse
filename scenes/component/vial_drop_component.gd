@@ -9,7 +9,7 @@ func _ready() -> void:
     (health_component as HealthComponent).died.connect(on_died)
 
 
-func on_died():
+func on_died() -> void:
     if randf() > drop_percent:
         return
 
@@ -19,7 +19,7 @@ func on_died():
     if not owner is Node2D:
         return
 
-    var spawn_position = (owner as Node2D).global_position
+    var spawn_position: Vector2 = (owner as Node2D).global_position
     var vial_instance: Node2D = vial_scene.instantiate()
     var entities_layer: Node2D = get_tree().get_first_node_in_group(
         "entities_layer"

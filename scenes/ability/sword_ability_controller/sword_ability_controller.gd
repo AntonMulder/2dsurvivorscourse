@@ -1,28 +1,32 @@
-extends Node
+class_name SwordAbilityUpgrade extends Node
 
-const MAX_RANGE = 150
+const MAX_RANGE: int = 150
 
 @export var sword_ability: PackedScene
 
-var damage = 5
-var base_wait_time
+var damage: int = 5
+var base_wait_time: float
+
+@onready var timer: Timer = $Timer
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-    base_wait_time = $Timer.wait_time
-    $Timer.timeout.connect(on_timer_timeout)
+    base_wait_time = timer.wait_time
+    timer.timeout.connect(on_timer_timeout)
     GameEvents.ability_upgrade_added.connect(on_ability_upgrade_added)
 
 
-func on_timer_timeout():
+func on_timer_timeout() -> void:
     var player: CharacterBody2D = get_tree().get_first_node_in_group("player")
     if player == null:
         return
-    var enemies: Array[Node] = get_tree().get_nodes_in_group("enemy")
+    var enemies: Array[BasicEnemey] = (
+        get_tree().get_nodes_in_group("enemy") as Array[BasicEnemey]
+    )
 
     enemies = enemies.filter(
-        func(enemy: Node2D):
+        func(enemy: BasicEnemey) -> bool:
             return (
                 enemy.global_position.distance_squared_to(
                     player.global_position
@@ -35,11 +39,11 @@ func on_timer_timeout():
         return
 
     enemies.sort_custom(
-        func(a: Node2D, b: Node2D):
-            var a_distance = a.global_position.distance_squared_to(
+        func(a: BasicEnemey, b: BasicEnemey) -> bool:
+            var a_distance: float = a.global_position.distance_squared_to(
                 player.global_position
             )
-            var b_distance = b.global_position.distance_squared_to(
+            var b_distance: float = b.global_position.distance_squared_to(
                 player.global_position
             )
 
@@ -47,7 +51,7 @@ func on_timer_timeout():
     )
 
     var sword_instance: SwordAbility = sword_ability.instantiate()
-    var foreground_layer = get_tree().get_first_node_in_group(
+    var foreground_layer: Node = get_tree().get_first_node_in_group(
         "foreground_layer"
     )
     foreground_layer.add_child(sword_instance)
@@ -70,6 +74,8 @@ func on_ability_upgrade_added(
     if upgrade.id != "sword_rate":
         return
 
-    var percent_reduction = current_upgrades["sword_rate"]["quantity"] * 0.1
-    $Timer.wait_time = (base_wait_time * (1 - percent_reduction))
-    $Timer.start()
+    var percent_reduction: float = (
+        current_upgrades["sword_rate"]["quantity"] * 0.1
+    )
+    timer.wait_time = (base_wait_time * (1 - percent_reduction))
+    timer.start()

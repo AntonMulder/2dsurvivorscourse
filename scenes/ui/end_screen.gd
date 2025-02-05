@@ -1,4 +1,4 @@
-extends CanvasLayer
+class_name EndScreen extends CanvasLayer
 
 @onready var restart_button: Button = $%RestartButton
 @onready var quit_button: Button = $%QuitButton
@@ -9,7 +9,9 @@ extends CanvasLayer
 func _ready() -> void:
     get_tree().paused = true
 
+    @warning_ignore("return_value_discarded")
     restart_button.pressed.connect(on_restart_button_pressed)
+    @warning_ignore("return_value_discarded")
     quit_button.pressed.connect(on_quit_button_pressed)
 
 
@@ -20,6 +22,7 @@ func set_defeat() -> void:
 
 func on_restart_button_pressed() -> void:
     get_tree().paused = false
+    @warning_ignore("return_value_discarded")
     get_tree().change_scene_to_file("res://scenes/main/main.tscn")
 
 

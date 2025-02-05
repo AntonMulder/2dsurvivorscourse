@@ -1,18 +1,19 @@
-extends CharacterBody2D
+class_name Player extends CharacterBody2D
 
-const MAX_SPEED = 125
-const ACCELERATION_SMOOTHING = 25
+const MAX_SPEED: int = 125
+const ACCELERATION_SMOOTHING: int = 25
 
-var number_coliding_bodies = 0
+var number_coliding_bodies: int = 0
 
 @onready var damage_interval_timer: Timer = $DamageIntervalTimer
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var health_bar: ProgressBar = $HealthBar
+@onready var collision_area_2d: Area2D = $CollisionArea2D
 
 
 func _ready() -> void:
-    $CollisionArea2D.body_entered.connect(on_body_entered)
-    $CollisionArea2D.body_exited.connect(on_body_exited)
+    collision_area_2d.body_entered.connect(on_body_entered)
+    collision_area_2d.body_exited.connect(on_body_exited)
     damage_interval_timer.timeout.connect(on_damage_interval_timer_timeout)
     health_component.health_changed.connect(on_health_changed)
     update_health_display()
@@ -20,9 +21,9 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-    var movement_vector = get_movement_vector()
-    var direction = movement_vector.normalized()
-    var target_velocity = direction * MAX_SPEED
+    var movement_vector: Vector2 = get_movement_vector()
+    var direction: Vector2 = movement_vector.normalized()
+    var target_velocity: Vector2 = direction * MAX_SPEED
 
     velocity = velocity.lerp(
         target_velocity, 1 - exp(-delta * ACCELERATION_SMOOTHING)
@@ -31,11 +32,11 @@ func _process(delta: float) -> void:
 
 
 func get_movement_vector() -> Vector2:
-    var x_movement = (
+    var x_movement: float = (
         Input.get_action_strength("move_right")
         - Input.get_action_strength("move_left")
     )
-    var y_movement = (
+    var y_movement: float = (
         Input.get_action_strength("move_down")
         - Input.get_action_strength("move_up")
     )

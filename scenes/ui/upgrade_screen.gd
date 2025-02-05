@@ -12,8 +12,8 @@ func _ready() -> void:
 
 
 func set_ability_upgrades(upgrades: Array[AbilityUpgrade]) -> void:
-    for upgrade in upgrades:
-        var card_instance = upgrade_card_scene.instantiate()
+    for upgrade: AbilityUpgrade in upgrades:
+        var card_instance: AbilityUpgradeCard = upgrade_card_scene.instantiate()
         card_container.add_child(card_instance)
         card_instance.set_ability_upgrade(upgrade)
         card_instance.selected.connect(on_upgrade_selected.bind(upgrade))

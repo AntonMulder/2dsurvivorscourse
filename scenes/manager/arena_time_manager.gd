@@ -2,21 +2,22 @@ class_name ArenaTimeMagner extends Node
 
 signal arena_difficulty_increased(arena_difficulty: int)
 
-const DIFFICULTY_INTERVAL = 5
+const DIFFICULTY_INTERVAL: int = 5
 
 @export var end_screen_scene: PackedScene
 
-var arena_difficulty = 0
+var arena_difficulty: int = 0
 
 @onready var timer: Timer = $Timer
 
 
 func _ready() -> void:
+    @warning_ignore("return_value_discarded")
     timer.timeout.connect(on_timer_timeout)
 
 
 func _process(_delta: float) -> void:
-    var next_time_target = (
+    var next_time_target: float = (
         timer.wait_time - ((arena_difficulty + 1) * DIFFICULTY_INTERVAL)
     )
     if timer.time_left <= next_time_target:
@@ -29,5 +30,5 @@ func get_time_elapsed() -> float:
 
 
 func on_timer_timeout() -> void:
-    var end_screen_instance = end_screen_scene.instantiate()
+    var end_screen_instance: EndScreen = end_screen_scene.instantiate()
     add_child(end_screen_instance)

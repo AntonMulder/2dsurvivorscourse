@@ -1,6 +1,6 @@
-extends Node
+class_name EnemyManager extends Node
 
-const SPAWN_RADIUS = 375
+const SPAWN_RADIUS: int = 375
 
 @export var basic_enemy_scene: PackedScene
 @export var arena_time_manager: ArenaTimeMagner
@@ -18,7 +18,7 @@ func _ready() -> void:
     )
 
 
-func on_timer_timeout():
+func on_timer_timeout() -> void:
     timer.start()
 
     var player: CharacterBody2D = get_tree().get_first_node_in_group("player")
@@ -28,7 +28,7 @@ func on_timer_timeout():
 
     var random_direction: Vector2 = Vector2.RIGHT.rotated(randf_range(0, TAU))
 
-    var spawn_position = (
+    var spawn_position: Vector2 = (
         player.global_position + (random_direction * SPAWN_RADIUS)
     )
 
@@ -42,6 +42,5 @@ func on_timer_timeout():
 
 
 func on_arena_difficulty_increased(arena_difficulty: int) -> void:
-    var time_off = (.1 / 12) * arena_difficulty
-    print(time_off)
+    var time_off: float = (.1 / 12) * arena_difficulty
     timer.wait_time = max(base_spawn_time - time_off, 0.1)

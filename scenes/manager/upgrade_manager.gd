@@ -1,10 +1,10 @@
-extends Node
+class_name UpgradeManager extends Node
 
 @export var upgrade_pool: Array[AbilityUpgrade]
 @export var experience_manager: ExperienceManager
 @export var upgrade_screen_scene: PackedScene
 
-var current_upgrades = {}
+var current_upgrades: Dictionary = {}
 
 
 func _ready() -> void:
@@ -28,7 +28,7 @@ func on_level_up(_current_level: int) -> void:
 
 
 func apply_upgrade(upgrade: AbilityUpgrade) -> void:
-    var has_upgrade = current_upgrades.has(upgrade.id)
+    var has_upgrade: bool = current_upgrades.has(upgrade.id)
 
     if !has_upgrade:
         current_upgrades[upgrade.id] = {"resource": upgrade, "quantity": 1}
