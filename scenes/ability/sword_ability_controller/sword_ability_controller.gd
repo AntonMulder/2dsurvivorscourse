@@ -13,6 +13,7 @@ var base_wait_time: float
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
     base_wait_time = timer.wait_time
+    @warning_ignore("return_value_discarded")
     timer.timeout.connect(on_timer_timeout)
     GameEvents.ability_upgrade_added.connect(on_ability_upgrade_added)
 
@@ -21,7 +22,7 @@ func on_timer_timeout() -> void:
     var player: CharacterBody2D = get_tree().get_first_node_in_group("player")
     if player == null:
         return
-    var enemies = get_tree().get_nodes_in_group("enemy")
+    var enemies: Array[Node] = get_tree().get_nodes_in_group("enemy")
 
     enemies = enemies.filter(
         func(enemy: BasicEnemey) -> bool:
@@ -55,13 +56,14 @@ func on_timer_timeout() -> void:
     foreground_layer.add_child(sword_instance)
     sword_instance.hitbox_component.damage = damage
 
-    sword_instance.global_position = (enemies[0].global_position)
+    sword_instance.global_position = (enemies[0] as Player).global_position
     sword_instance.global_position += (
         Vector2.RIGHT.rotated(randf_range(0, TAU)) * 4
     )
 
     var enemy_direction: Vector2 = (
-        enemies[0].global_position - sword_instance.global_position
+        (enemies[0] as BasicEnemey).global_position
+        - sword_instance.global_position
     )
     sword_instance.rotation = enemy_direction.angle()
 
