@@ -1,6 +1,7 @@
 class_name ArenaTimeUI extends CanvasLayer
 
 @export var arena_time_manager: ArenaTimeMagner
+
 @onready var label: Label = $MarginContainer/Label
 
 
