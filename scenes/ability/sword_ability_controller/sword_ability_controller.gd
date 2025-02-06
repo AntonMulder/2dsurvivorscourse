@@ -21,9 +21,7 @@ func on_timer_timeout() -> void:
     var player: CharacterBody2D = get_tree().get_first_node_in_group("player")
     if player == null:
         return
-    var enemies: Array[BasicEnemey] = (
-        get_tree().get_nodes_in_group("enemy") as Array[BasicEnemey]
-    )
+    var enemies = get_tree().get_nodes_in_group("enemy")
 
     enemies = enemies.filter(
         func(enemy: BasicEnemey) -> bool:
