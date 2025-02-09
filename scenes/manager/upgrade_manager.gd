@@ -19,6 +19,16 @@ func apply_upgrade(upgrade: AbilityUpgrade) -> void:
     else:
         current_upgrades[upgrade.id]["quantity"] += 1
 
+    if upgrade.max_quantity > 0:
+        var current_quantity: int = current_upgrades[upgrade.id]["quantity"]
+
+        # Ugly code from tutorial.
+        if current_quantity == upgrade.max_quantity:
+            upgrade_pool = upgrade_pool.filter(
+                func(pool_upgrade: AbilityUpgrade) -> bool:
+                    return pool_upgrade.id != upgrade.id
+            )
+
     GameEvents.emit_ability_upgrade_added(upgrade, current_upgrades)
 
 
@@ -26,13 +36,14 @@ func pick_upgrades() -> Array[AbilityUpgrade]:
     var chosen_upgrades: Array[AbilityUpgrade] = []
     var filtered_upgrades: Array[AbilityUpgrade] = upgrade_pool.duplicate()
 
-    for i: int in 2:
+    for i: int in filtered_upgrades.size():
         var chosen_upgrade: AbilityUpgrade = filtered_upgrades.pick_random()
         chosen_upgrades.append(chosen_upgrade)
         filtered_upgrades = filtered_upgrades.filter(
             func(upgrade: AbilityUpgrade) -> bool:
                 return upgrade.id != chosen_upgrade.id
         )
+
     return chosen_upgrades
 
 
@@ -45,7 +56,7 @@ func on_level_up(_current_level: int) -> void:
         upgrade_screen_scene.instantiate()
     )
     add_child(upgrade_screen_instance)
-    var chosen_upgrades = pick_upgrades()
+    var chosen_upgrades: Array[AbilityUpgrade] = pick_upgrades()
     upgrade_screen_instance.set_ability_upgrades(
         chosen_upgrades as Array[AbilityUpgrade]
     )

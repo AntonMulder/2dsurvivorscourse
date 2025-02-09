@@ -7,5 +7,6 @@
 script = ExtResource("1_yq2oa")
 ability_controller_scene = ExtResource("1_s2xrv")
 id = "axe"
+max_quantity = 1
 name = "Axe"
 description = "Periodically sends out a spinning axe."
