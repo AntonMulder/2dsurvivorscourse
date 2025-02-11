@@ -10,6 +10,8 @@ var number_coliding_bodies: int = 0
 @onready var health_bar: ProgressBar = $HealthBar
 @onready var collision_area_2d: Area2D = $CollisionArea2D
 @onready var abilities: Node = $Abilities
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var visuals: Node2D = $Visuals
 
 
 func _ready() -> void:
@@ -31,6 +33,18 @@ func _process(delta: float) -> void:
         target_velocity, 1 - exp(-delta * ACCELERATION_SMOOTHING)
     )
     move_and_slide()
+
+    if movement_vector.x != 0 or movement_vector.y != 0:
+        animation_player.play("walk")
+    else:
+        animation_player.play("RESET")
+
+    var move_sign: int = sign(movement_vector.x)
+
+    if move_sign == 0:
+        visuals.scale = Vector2.ONE
+    else:
+        visuals.scale = Vector2(move_sign, 1)
 
 
 func get_movement_vector() -> Vector2:
