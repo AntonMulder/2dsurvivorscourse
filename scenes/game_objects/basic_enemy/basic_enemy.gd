@@ -3,6 +3,7 @@ class_name BasicEnemey extends CharacterBody2D
 const MAX_SPEED: int = 40
 
 @onready var health_component: HealthComponent = $HealthComponent
+@onready var visuals: Node2D = $Visuals
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -10,6 +11,11 @@ func _process(_delta: float) -> void:
     var direction: Vector2 = get_direction_to_player()
     velocity = direction * MAX_SPEED
     move_and_slide()
+
+    var move_sign: float = sign(velocity.x)
+
+    if move_sign != 0:
+        visuals.scale = Vector2(-move_sign, 1)
 
 
 func get_direction_to_player() -> Vector2:
