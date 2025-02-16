@@ -1,9 +1,7 @@
-class_name BasicEnemey extends CharacterBody2D
+class_name WizardEnemy extends CharacterBody2D
 
-const MAX_SPEED: int = 40
-
-@onready var visuals: Node2D = $Visuals
 @onready var velocity_component: VelocityComponent = $VelocityComponent
+@onready var visuals: Node2D = $Visuals
 
 
 func _process(_delta: float) -> void:
@@ -12,4 +10,4 @@ func _process(_delta: float) -> void:
 
     var move_sign: float = sign(velocity.x)
     if move_sign != 0:
-        visuals.scale = Vector2(-move_sign, 1)
+        visuals.scale = Vector2(move_sign, 1)
