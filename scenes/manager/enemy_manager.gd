@@ -3,14 +3,17 @@ class_name EnemyManager extends Node
 const SPAWN_RADIUS: int = 375
 
 @export var basic_enemy_scene: PackedScene
+@export var wizard_enemey_scene: PackedScene
 @export var arena_time_manager: ArenaTimeMagner
 
 var base_spawn_time: float = 0.0
+var enemy_table: WeightedTable = WeightedTable.new()
 
 @onready var timer: Timer = $Timer
 
 
 func _ready() -> void:
+    enemy_table.add_item(basic_enemy_scene, 10)
     base_spawn_time = timer.wait_time
     timer.timeout.connect(on_timer_timeout)
     arena_time_manager.arena_difficulty_increased.connect(
@@ -62,7 +65,8 @@ func on_timer_timeout() -> void:
         "entities_layer"
     )
 
-    var enemy: CharacterBody2D = basic_enemy_scene.instantiate()
+    var enemy_scene: PackedScene = enemy_table.pick_item()
+    var enemy: CharacterBody2D = enemy_scene.instantiate()
     entities_layer.add_child(enemy)
 
     enemy.global_position = get_spawn_position()
@@ -71,3 +75,6 @@ func on_timer_timeout() -> void:
 func on_arena_difficulty_increased(arena_difficulty: int) -> void:
     var time_off: float = (.1 / 12) * arena_difficulty
     timer.wait_time = max(base_spawn_time - time_off, 0.1)
+
+    if arena_difficulty == 6:
+        enemy_table.add_item(wizard_enemey_scene, 20)
