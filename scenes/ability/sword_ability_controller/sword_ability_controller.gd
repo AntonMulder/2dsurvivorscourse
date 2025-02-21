@@ -19,7 +19,7 @@ func _ready() -> void:
 
 
 func on_timer_timeout() -> void:
-    var player: CharacterBody2D = get_tree().get_first_node_in_group("player")
+    var player: Player = get_tree().get_first_node_in_group("player")
     if player == null:
         return
     var enemies: Array[Node] = get_tree().get_nodes_in_group("enemy")
