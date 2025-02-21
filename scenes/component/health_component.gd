@@ -13,7 +13,6 @@ func _ready() -> void:
 
 
 func damage(damage_amount: float) -> void:
-    print(damage_amount)
     current_health -= damage_amount
     health_changed.emit()
     Callable(check_health).call_deferred()
