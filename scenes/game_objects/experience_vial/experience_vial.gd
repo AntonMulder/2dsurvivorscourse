@@ -44,6 +44,6 @@ func on_area_entered(_other_area: Area2D) -> void:
         . set_ease(Tween.EASE_IN)
         . set_trans(Tween.TRANS_BACK)
     )
-    tween.tween_property(sprite_2d, "scale", Vector2.ZERO, .5).set_delay(0.45)
+    tween.tween_property(sprite_2d, "scale", Vector2.ZERO, .5).set_delay(0.5)
     tween.chain()
     tween.tween_callback(collect)
