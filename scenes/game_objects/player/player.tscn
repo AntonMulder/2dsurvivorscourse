@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dxd735n3k558p"]
+[gd_scene load_steps=12 format=3 uid="uid://dxd735n3k558p"]
 
 [ext_resource type="Script" path="res://scenes/game_objects/player/player.gd" id="1_0xfgs"]
 [ext_resource type="Texture2D" uid="uid://dvanlsc3ywlb" path="res://scenes/game_objects/player/player.png" id="1_mjnvm"]
@@ -91,9 +91,6 @@ _data = {
 "walk": SubResource("Animation_rakig")
 }
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_peurt"]
-bg_color = Color(0.247059, 0.14902, 0.192157, 1)
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mqnxh"]
 bg_color = Color(0.262745, 0.882353, 0.701961, 1)
 border_width_left = 2
@@ -139,7 +136,6 @@ offset_top = -22.0
 offset_right = 16.0
 offset_bottom = -16.0
 pivot_offset = Vector2(16, 3)
-theme_override_styles/background = SubResource("StyleBoxFlat_peurt")
 theme_override_styles/fill = SubResource("StyleBoxFlat_mqnxh")
 max_value = 1.0
 value = 0.5
