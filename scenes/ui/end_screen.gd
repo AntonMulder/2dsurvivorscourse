@@ -4,14 +4,24 @@ class_name EndScreen extends CanvasLayer
 @onready var quit_button: Button = $%QuitButton
 @onready var title_label: Label = $%TitleLabel
 @onready var description_label: Label = $%DescriptionLabel
+@onready var panel_container: PanelContainer = $%PanelContainer
 
 
 func _ready() -> void:
+    panel_container.pivot_offset = panel_container.size / 2
+
+    var tween: Tween = create_tween()
+    tween.tween_property(panel_container, "scale", Vector2.ZERO, 0)
+    (
+        tween
+        . tween_property(panel_container, "scale", Vector2.ONE, .3)
+        . set_ease(Tween.EASE_OUT)
+        . set_trans(Tween.TRANS_BACK)
+    )
+
     get_tree().paused = true
 
-    @warning_ignore("return_value_discarded")
     restart_button.pressed.connect(on_restart_button_pressed)
-    @warning_ignore("return_value_discarded")
     quit_button.pressed.connect(on_quit_button_pressed)
 
 
@@ -22,7 +32,6 @@ func set_defeat() -> void:
 
 func on_restart_button_pressed() -> void:
     get_tree().paused = false
-    @warning_ignore("return_value_discarded")
     get_tree().change_scene_to_file("res://scenes/main/main.tscn")
 
 
