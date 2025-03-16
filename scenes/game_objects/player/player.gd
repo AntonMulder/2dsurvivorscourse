@@ -1,9 +1,7 @@
 class_name Player extends CharacterBody2D
 
-const MAX_SPEED: int = 125
-const ACCELERATION_SMOOTHING: int = 25
-
 var number_coliding_bodies: int = 0
+var base_speed: int = 0
 
 @onready var damage_interval_timer: Timer = $DamageIntervalTimer
 @onready var health_component: HealthComponent = $HealthComponent
@@ -12,9 +10,11 @@ var number_coliding_bodies: int = 0
 @onready var abilities: Node = $Abilities
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var visuals: Node2D = $Visuals
+@onready var velocity_component: VelocityComponent = $VelocityComponent
 
 
 func _ready() -> void:
+    base_speed = velocity_component.max_speed
     collision_area_2d.body_entered.connect(on_body_entered)
     collision_area_2d.body_exited.connect(on_body_exited)
     damage_interval_timer.timeout.connect(on_damage_interval_timer_timeout)
@@ -24,15 +24,11 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
     var movement_vector: Vector2 = get_movement_vector()
     var direction: Vector2 = movement_vector.normalized()
-    var target_velocity: Vector2 = direction * MAX_SPEED
-
-    velocity = velocity.lerp(
-        target_velocity, 1 - exp(-delta * ACCELERATION_SMOOTHING)
-    )
-    move_and_slide()
+    velocity_component.accelerate_in_direction(direction)
+    velocity_component.move(self)
 
     if movement_vector.x != 0 or movement_vector.y != 0:
         animation_player.play("walk")
@@ -90,8 +86,12 @@ func on_health_changed() -> void:
 func on_ability_upgrade_added(
     ability_upgrade: AbilityUpgrade, _current_upgrades: Dictionary
 ) -> void:
-    if not ability_upgrade is Ability:
-        return
-    abilities.add_child(
-        (ability_upgrade as Ability).ability_controller_scene.instantiate()
-    )
+    if ability_upgrade is Ability:
+        abilities.add_child(
+            (ability_upgrade as Ability).ability_controller_scene.instantiate()
+        )
+    elif ability_upgrade.id == "player_speed":
+        velocity_component.max_speed = (
+            base_speed
+            + (base_speed * _current_upgrades["player_speed"]["quantity"] * .1)
+        )

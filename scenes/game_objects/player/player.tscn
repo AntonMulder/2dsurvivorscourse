@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://dxd735n3k558p"]
+[gd_scene load_steps=13 format=3 uid="uid://dxd735n3k558p"]
 
 [ext_resource type="Script" path="res://scenes/game_objects/player/player.gd" id="1_0xfgs"]
 [ext_resource type="Texture2D" uid="uid://dvanlsc3ywlb" path="res://scenes/game_objects/player/player.png" id="1_mjnvm"]
 [ext_resource type="PackedScene" uid="uid://dcqkh5t2ulg3" path="res://scenes/ability/sword_ability_controller/sword_ability_controller.tscn" id="2_2sq37"]
 [ext_resource type="PackedScene" uid="uid://d207g0vdu543j" path="res://scenes/component/health_component.tscn" id="4_wqtpp"]
+[ext_resource type="PackedScene" uid="uid://6cn7nquvgto2" path="res://scenes/component/velocity_component.tscn" id="5_0621v"]
 
 [sub_resource type="Animation" id="Animation_wy0g7"]
 step = 0.1
@@ -118,6 +119,10 @@ libraries = {
 "": SubResource("AnimationLibrary_teq8d")
 }
 autoplay = "walk"
+
+[node name="VelocityComponent" parent="." instance=ExtResource("5_0621v")]
+max_speed = 90
+accelaration = 25.0
 
 [node name="HealthComponent" parent="." instance=ExtResource("4_wqtpp")]
 
