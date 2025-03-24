@@ -1,4 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://bx3w05c8lwwv2"]
+[gd_scene load_steps=14 format=3 uid="uid://bx3w05c8lwwv2"]
+
+[ext_resource type="PackedScene" uid="uid://5kv1q5m8jrsq" path="res://scenes/component/random_stream_player_2d_component.tscn" id="1_lbjlm"]
+[ext_resource type="AudioStream" uid="uid://yr8vy5y6g0gu" path="res://assets/audio/footstep_carpet_000.ogg" id="2_2u8oy"]
+[ext_resource type="AudioStream" uid="uid://bk0pr3lacwy52" path="res://assets/audio/footstep_carpet_001.ogg" id="3_s7so1"]
+[ext_resource type="AudioStream" uid="uid://bkrqy2xpg8o3c" path="res://assets/audio/footstep_carpet_002.ogg" id="4_whfrt"]
+[ext_resource type="AudioStream" uid="uid://bt145gdat5iwg" path="res://assets/audio/footstep_carpet_003.ogg" id="5_mbmf2"]
+[ext_resource type="AudioStream" uid="uid://dglfj0apwbc0g" path="res://assets/audio/footstep_carpet_004.ogg" id="6_fntub"]
 
 [sub_resource type="GDScript" id="GDScript_48few"]
 script/source = "class_name DeathComponent extends Node2D
@@ -8,6 +15,7 @@ script/source = "class_name DeathComponent extends Node2D
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var gpu_particles_2d: GPUParticles2D = $GPUParticles2D
+@onready var hit_random_audio_player_component:  RandomStreamPlayer2DComponent = $HitRandomAudioPlayerComponent
 
 func _ready() -> void:
     gpu_particles_2d.texture = sprite.texture
@@ -23,6 +31,8 @@ func on_died() -> void:
     
     global_position = spawn_position
     animation_player.play(\"default\")
+    
+    hit_random_audio_player_component.play_random()
     
 "
 
@@ -102,6 +112,10 @@ script = SubResource("GDScript_48few")
 libraries = {
 "": SubResource("AnimationLibrary_ren3v")
 }
+
+[node name="HitRandomAudioPlayerComponent" parent="." instance=ExtResource("1_lbjlm")]
+max_distance = 300.0
+streams = Array[AudioStream]([ExtResource("2_2u8oy"), ExtResource("3_s7so1"), ExtResource("4_whfrt"), ExtResource("5_mbmf2"), ExtResource("6_fntub")])
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 position = Vector2(0, 2)

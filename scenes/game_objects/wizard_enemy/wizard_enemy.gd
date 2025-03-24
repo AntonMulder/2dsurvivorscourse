@@ -4,6 +4,11 @@ var is_moving: bool = false
 
 @onready var velocity_component: VelocityComponent = $VelocityComponent
 @onready var visuals: Node2D = $Visuals
+@onready var hurtbox_component: HurtboxComponent = $HurtboxComponent
+
+
+func _ready() -> void:
+    hurtbox_component.hit.connect(on_hit)
 
 
 func _process(_delta: float) -> void:
@@ -21,3 +26,7 @@ func _process(_delta: float) -> void:
 
 func set_is_moving(moving: bool) -> void:
     is_moving = moving
+
+
+func on_hit() -> void:
+    $HitRandomAudioPlayerComponent.play_random()
