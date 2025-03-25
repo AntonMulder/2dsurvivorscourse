@@ -3,6 +3,8 @@ class_name ExperienceVal extends Node2D
 @onready var area_2d: Area2D = $Area2D
 @onready var collision_shape_2d: CollisionShape2D = $Area2D/CollisionShape2D
 @onready var sprite_2d: Sprite2D = $Sprite2D
+@onready
+var stream_player: RandomStreamPlayer2DComponent = $RandomStreamPlayer2DComponent
 
 
 # Called when the node enters the scene tree for the first time.
@@ -47,3 +49,5 @@ func on_area_entered(_other_area: Area2D) -> void:
     tween.tween_property(sprite_2d, "scale", Vector2.ZERO, .5).set_delay(0.5)
     tween.chain()
     tween.tween_callback(collect)
+
+    stream_player.play_random()

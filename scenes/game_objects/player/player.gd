@@ -11,6 +11,8 @@ var base_speed: int = 0
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var visuals: Node2D = $Visuals
 @onready var velocity_component: VelocityComponent = $VelocityComponent
+@onready
+var hit_random_stream_player: RandomStreamPlayer2DComponent = $HitRandomStreamPlayer
 
 
 func _ready() -> void:
@@ -80,6 +82,7 @@ func on_damage_interval_timer_timeout() -> void:
 
 
 func on_health_changed() -> void:
+    hit_random_stream_player.play_random()
     GameEvents.emit_player_damaged()
     update_health_display()
 
