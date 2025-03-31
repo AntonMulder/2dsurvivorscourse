@@ -5,6 +5,8 @@ class_name EndScreen extends CanvasLayer
 @onready var title_label: Label = $%TitleLabel
 @onready var description_label: Label = $%DescriptionLabel
 @onready var panel_container: PanelContainer = $%PanelContainer
+@onready var defeat_stream_player: AudioStreamPlayer = $DefeatStreamPlayer
+@onready var victory_stream_player: AudioStreamPlayer = $VictoryStreamPlayer
 
 
 func _ready() -> void:
@@ -28,6 +30,14 @@ func _ready() -> void:
 func set_defeat() -> void:
     title_label.text = "Defeat"
     description_label.text = "You lost!"
+    play_jingle(true)
+
+
+func play_jingle(defeat: bool = false) -> void:
+    if defeat:
+        defeat_stream_player.play()
+    else:
+        victory_stream_player.play()
 
 
 func on_restart_button_pressed() -> void:
