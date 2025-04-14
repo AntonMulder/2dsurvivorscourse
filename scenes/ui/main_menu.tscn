@@ -1,11 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://dwcw4jes00xwm"]
+[gd_scene load_steps=5 format=3 uid="uid://dwcw4jes00xwm"]
 
 [ext_resource type="Script" path="res://scenes/ui/main_menu.gd" id="1_1ymsf"]
 [ext_resource type="TileSet" uid="uid://dt54lh82qcsem" path="res://resources/tileset.tres" id="1_6kwx4"]
 [ext_resource type="PackedScene" uid="uid://cfsqwv02cby3r" path="res://scenes/ui/sound_button.tscn" id="2_373e2"]
+[ext_resource type="PackedScene" uid="uid://scisbyxwwfko" path="res://scenes/ui/vignette.tscn" id="2_hq75g"]
 
 [node name="MainMenu" type="CanvasLayer"]
 script = ExtResource("1_1ymsf")
+
+[node name="vignette" parent="." instance=ExtResource("2_hq75g")]
 
 [node name="TileMap" type="TileMap" parent="."]
 position = Vector2(19, -20)
@@ -38,6 +41,7 @@ size_flags_vertical = 4
 
 [node name="Label" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_type_variation = &"BlueOutlineLabel"
 theme_override_font_sizes/font_size = 32
 text = "The Arena"
 
