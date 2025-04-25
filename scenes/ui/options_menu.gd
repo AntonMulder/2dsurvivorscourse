@@ -21,9 +21,7 @@ func update_display() -> void:
         window_button.text = "Windowed"
     else:
         window_button.text = "Fullscreen"
-    print(get_bus_volume_percent("sfx"))
     sfx_slider.value = get_bus_volume_percent("sfx")
-    print(get_bus_volume_percent("music"))
     music_slider.value = get_bus_volume_percent("music")
 
 
