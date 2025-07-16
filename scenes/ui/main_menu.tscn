@@ -9,6 +9,7 @@
 script = ExtResource("1_1ymsf")
 
 [node name="vignette" parent="." instance=ExtResource("2_hq75g")]
+layer = 2
 
 [node name="TileMap" type="TileMap" parent="."]
 position = Vector2(19, -20)

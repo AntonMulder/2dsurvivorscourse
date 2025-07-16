@@ -38,6 +38,8 @@ func on_resume_pressed() -> void:
 
 
 func on_options_pressed() -> void:
+    ScreenTransition.transition()
+    await ScreenTransition.transitioned_halfway
     var options_menu_instance: OptionsMenu = options_menu_scene.instantiate()
     add_child(options_menu_instance)
     options_menu_instance.back_pressed.connect(
