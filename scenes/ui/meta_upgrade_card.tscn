@@ -1,6 +1,6 @@
 [gd_scene load_steps=18 format=3 uid="uid://ceyjpxl1l2ue2"]
 
-[ext_resource type="Script" path="res://scenes/ui/ability_upgrade_card.gd" id="1_juguv"]
+[ext_resource type="Script" path="res://scenes/ui/meta_upgrade_card.gd" id="1_1mxg5"]
 [ext_resource type="PackedScene" uid="uid://cnpegf7jksmcw" path="res://scenes/component/random_stream_player_component.tscn" id="2_2gs23"]
 [ext_resource type="AudioStream" uid="uid://ich7ykc4ii3j" path="res://assets/audio/switch1.ogg" id="3_0gc0r"]
 [ext_resource type="AudioStream" uid="uid://dhux08n1n36ms" path="res://assets/audio/switch2.ogg" id="4_cicys"]
@@ -111,10 +111,10 @@ border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
 
-[node name="MetaUpgradeCard" type="PanelContainer" groups=["upgrade_card"]]
+[node name="MetaUpgradeCard" type="PanelContainer" groups=["meta_upgrade_card", "upgrade_card"]]
 custom_minimum_size = Vector2(170, 0)
 pivot_offset = Vector2(75, 75)
-script = ExtResource("1_juguv")
+script = ExtResource("1_1mxg5")
 
 [node name="ClickPlayerComponent" parent="." instance=ExtResource("2_2gs23")]
 streams = Array[AudioStream]([ExtResource("3_0gc0r"), ExtResource("4_cicys"), ExtResource("5_rq7n6"), ExtResource("6_j8i2s"), ExtResource("7_h43dl"), ExtResource("8_qierd"), ExtResource("9_o7lom"), ExtResource("10_jso7l"), ExtResource("11_s8wfa"), ExtResource("12_k0jh8")])
@@ -165,7 +165,8 @@ layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = -1
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+[node name="ProgressLabel" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 8
 theme_type_variation = &"BlueOutlineLabel"
@@ -177,6 +178,7 @@ layout_mode = 2
 mouse_filter = 2
 
 [node name="ProgressBar" type="ProgressBar" parent="MarginContainer/VBoxContainer/VBoxContainer/MarginContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
 theme_override_styles/fill = SubResource("StyleBoxFlat_jq0n0")

@@ -34,3 +34,4 @@ func add_meta_upgrade(upgrade: MetaUpgrade) -> void:
     if not save_data["meta_upgrades"].has(upgrade.id):
         save_data["meta_upgrades"][upgrade.id] = {"quantity": 0}
     save_data["meta_upgrades"][upgrade.id]["quantity"] += 1
+    save()
